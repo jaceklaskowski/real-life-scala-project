@@ -7,9 +7,18 @@ object LoadFileApp extends App {
   Source
     .fromFile(file)
     .getLines()
-    .foreach(println)
+    .zipWithIndex
+    .map(beautify) // <-- conversion from pairs to lines with their numbers as strings
+    .foreach(println) // <-- the action
 
   // Bonus exercise
   // How to print out lines with line numbers?
-  // Hint: Look at Seq scaladoc
+  // Hint: Look at Iterator scaladoc
+
+  // Home exercise: Review Tuple2 scaladoc
+  def beautify(tuple: (String, Int)): String = {
+    val (line, number) = tuple // <-- pattern matching on assignment
+    s"Line $number: $line"
+  }
+
 }
