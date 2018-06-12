@@ -17,7 +17,7 @@ object ScalaApp extends App {
 
   // Now you're in Scala Collection API world
   // Iterator[Path] <-- this is Scala! (not Sparta :))
-  println(s"Files under $path directory:")
+  println(s">>> Files under $path directory:")
   // one should never use an iterator after calling a method on it.
   // Iterator is a one-pass data structure
   // Right after you consumed elements of it, you won't have them available again
@@ -27,4 +27,15 @@ object ScalaApp extends App {
   } else {
     files.foreach(println)
   }
+
+  // Two uses of _ (underscore) in Scala:
+  // 1. eta-expansion to convert a method into a function
+  // 2. a shortcut to reference input arguments in a function
+
+  println(">>> Loading the content of the files")
+  files
+    .map(_.toString) // equivalent to whatever => whatever.toString
+                     // one underscore == one input parameter
+    .map(Utils.loadFile)
+    .foreach(println)
 }
