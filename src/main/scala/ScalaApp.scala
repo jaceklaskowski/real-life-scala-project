@@ -13,13 +13,14 @@ object ScalaApp extends App {
   import scala.collection.JavaConverters._
   // Please note the underline to denote a Scala implicit conversion
   // It's like an extension method in C#
-  import scala.collection.Iterator
-  import java.nio.file.Path
-  val files: Iterator[Path] = Files.list(dir).iterator().asScala
+  val files = Files.list(dir).iterator().asScala.toList
 
   // Now you're in Scala Collection API world
   // Iterator[Path] <-- this is Scala! (not Sparta :))
   println(s"Files under $path directory:")
+  // one should never use an iterator after calling a method on it.
+  // Iterator is a one-pass data structure
+  // Right after you consumed elements of it, you won't have them available again
   val filesCount = files.length
   if (filesCount == 0) {
     println("No files")
