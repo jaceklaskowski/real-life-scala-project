@@ -1,9 +1,6 @@
-import Utils.FileContent
-
 object ParseFileApp extends App {
 
-  val lines = Utils.readFile("src/test/resources/100PB.txt")
-  val fc = FileContent(lines)
+  val fc = FileContent.fromFile("src/test/resources/100PB.txt")
   println(s"header: ${fc.header}")
 
   println(s"File number: ${fc.header.fileNumber}")
