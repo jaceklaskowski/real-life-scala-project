@@ -23,4 +23,12 @@ object Utils {
     val lines = content
     (header, lines)
   }
+
+  // type alias
+  type Header = String // <-- any String can be a Header
+  type Lines = Iterator[String] // we do not enforce proper types for our "metadata"
+  // you'll be using it very rarely
+  def headerAndLinesV2(content: Iterator[String]): (Header, Lines) = {
+    headerAndLinesV1(content)
+  }
 }

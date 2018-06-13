@@ -14,7 +14,7 @@ object ParseFileApp extends App {
   // pattern matching on assignment
   // destructure a tuple into its elements
   // avoiding _1 and _2
-  val (header, content) = Utils.headerAndLinesV1(lines)
+  val (header, content) = Utils.headerAndLinesV2(lines)
 
   // Home exercise: Is Iterator.toSeq still lazy?
   println(s"header: $header")
@@ -32,4 +32,6 @@ object ParseFileApp extends App {
   // val content = lines.drop(1)
 
   content.foreach(println)
+
+  println("\n >>> The app worked fine...you can continue")
 }
