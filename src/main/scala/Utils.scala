@@ -25,10 +25,26 @@ object Utils {
   }
 
   // type alias
-  type Header = String // <-- any String can be a Header
+  type HeaderV2 = String // <-- any String can be a Header
   type Lines = Iterator[String] // we do not enforce proper types for our "metadata"
   // you'll be using it very rarely
-  def headerAndLinesV2(content: Iterator[String]): (Header, Lines) = {
+  def headerAndLinesV2(content: Iterator[String]): (HeaderV2, Lines) = {
     headerAndLinesV1(content)
+  }
+
+  // How to enforce types so headerAndLinesV3 would only return Headers not Strings?
+  // So, Strings != Headers (like Longs != Ints)
+  // hint: Scala is an object-oriented programming language
+  case class Header(line: String) {
+    val prefix = "file number: "
+    val fileNumber = line.substring(prefix.length).toLong
+
+  } // <-- Header contains a String = a "has-a" relationship
+
+  // we're now to replace a tuple to a concrete type that says something about the fields
+  case class FileContent(header: Header, lines: Iterator[String])
+  def headerAndLinesV3(content: Iterator[String]): FileContent = {
+    val (header, lines) = headerAndLinesV2(content)
+    FileContent(Header(header), lines)
   }
 }

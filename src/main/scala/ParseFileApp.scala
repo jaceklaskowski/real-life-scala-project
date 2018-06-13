@@ -1,3 +1,5 @@
+import Utils.FileContent
+
 object ParseFileApp extends App {
 
   // Files with a header and a body
@@ -13,17 +15,11 @@ object ParseFileApp extends App {
 
   // pattern matching on assignment
   // destructure a tuple into its elements
-  // avoiding _1 and _2
-  val (header, content) = Utils.headerAndLinesV2(lines)
+  val FileContent(header, content) = Utils.headerAndLinesV3(lines)
 
-  // Home exercise: Is Iterator.toSeq still lazy?
   println(s"header: $header")
 
-  // time for some parsing
-  // Open StringOps and find a method to strip "file number: " from a string
-  // val fileNumber = header.split(": ").tail.head
-  val prefix = "file number: "
-  val fileNumber = header.substring(prefix.length).toLong
+  val fileNumber = header.fileNumber
   println(s"File number: $fileNumber")
 
   // How to get at the content without the header?
