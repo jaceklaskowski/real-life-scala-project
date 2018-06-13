@@ -43,6 +43,11 @@ object Utils {
 
   // we're now to replace a tuple to a concrete type that says something about the fields
   case class FileContent(header: Header, lines: Iterator[String])
+  object FileContent { // <-- a companion object
+    // a factory method to create objects of the companion class
+    def apply(lines: Iterator[String]): FileContent = Utils.headerAndLinesV3(lines)
+  }
+
   def headerAndLinesV3(content: Iterator[String]): FileContent = {
     val (header, lines) = headerAndLinesV2(content)
     FileContent(Header(header), lines)

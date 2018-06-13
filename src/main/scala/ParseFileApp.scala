@@ -15,7 +15,13 @@ object ParseFileApp extends App {
 
   // pattern matching on assignment
   // destructure a tuple into its elements
-  val FileContent(header, content) = Utils.headerAndLinesV3(lines)
+  // What do you think should be the owner of headerAndLinesV3?
+  // Whenever you see a code pattern like Utils.createABC => createABC is a constructor of ABC
+  // In Java is just a ABC constructor or an ABC factory
+  // In Scala you do it using object with the factory method
+  // In Scala factory methods are usually (if not always) done with apply's
+  // FileContent.apply == FileContent
+  val FileContent(header, content) = FileContent(lines)
 
   println(s"header: $header")
 
