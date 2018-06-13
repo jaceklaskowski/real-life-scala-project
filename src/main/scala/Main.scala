@@ -17,6 +17,7 @@ object Main extends App {
   println(">>> Loading the content of the files")
   files
     .map(FileContent.fromFile)
+    .sortBy(fc => fc.header.fileNumber)
     .foreach(println)
 
   println("\n >>> The app worked fine...you can continue")
