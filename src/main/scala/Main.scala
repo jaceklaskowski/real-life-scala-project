@@ -49,8 +49,11 @@ object Main extends App with LazyLogging {
   }
 
   logger.debug(">>> Loading the content of the files")
+  // Q: What to do with files with incorrect headers?
+  // Q: What if you read 1MM of files and 1MM+1 file is corrupted?
+  import java.nio.file.Path
   files
-    .map(FileContent.fromFile)
+    .flatMap { p: Path => FileContent.fromFile(p) } // <-- skips files when fromFile == None
     .sortBy(fc => fc.header.fileNumber)
     .foreach(println)
 
