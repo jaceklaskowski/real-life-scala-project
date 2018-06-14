@@ -8,3 +8,6 @@ scalaVersion := "2.12.6"
 mainClass in assembly := Some("Main")
 
 libraryDependencies += "com.github.scopt" %% "scopt" % "3.7.0"
+
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"

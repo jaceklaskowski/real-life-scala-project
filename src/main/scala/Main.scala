@@ -1,7 +1,6 @@
+import com.typesafe.scalalogging.LazyLogging
 
-object Main extends App {
-
-  // How to support two options + --help?
+object Main extends App with LazyLogging {
 
   val parser = new scopt.OptionParser[MyConfig]("runMain Main") {
     head("Main", "1.x")
@@ -25,7 +24,7 @@ object Main extends App {
   // some value ==> Some(value)
   val myConfig = parser.parse(args, MyConfig()).getOrElse { // FIXME Explain Option type + getOrElse
     // this code is executed only when parsing fails
-    println("Something went wrong. Exiting")
+    logger.error("Something went wrong. Exiting")
     sys.exit(-1) // FIXME Explain sys object
   }
 
@@ -40,22 +39,22 @@ object Main extends App {
   // FIXME Explain Seq.empty without defining the type of elements (type inference)
   val files = Try(Files.list(dir).iterator().asScala.toList).getOrElse(Seq.empty)
 
-  println(s">>> Files under ${_path} directory:")
+  logger.debug(s">>> Files under ${_path} directory:")
   val filesCount = files.length
   if (filesCount == 0) {
-    println(_noFilesMsg)
+    logger.info(_noFilesMsg)
     sys.exit(0)
   } else {
     files.foreach(println)
   }
 
-  println(">>> Loading the content of the files")
+  logger.debug(">>> Loading the content of the files")
   files
     .map(FileContent.fromFile)
     .sortBy(fc => fc.header.fileNumber)
     .foreach(println)
 
-  println("\n >>> The app worked fine...you can continue")
+  logger.info("\n >>> The app worked fine...you can continue")
 
 }
 
