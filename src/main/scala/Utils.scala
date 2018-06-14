@@ -1,13 +1,11 @@
 case class Header(fileNumber: Long)
 object Header {
-  def apply(line: String): Option[Header] = {
-    val prefix = "file number: "
-    if (line.startsWith(prefix)) {
-      import scala.util.Try
-      Try(line.substring(prefix.length).toLong).toOption.map { fileNumber =>
-        Header(fileNumber)
-      }
-    } else None
+  def create(line: String): Option[Header] = {
+    val header = """file number: (\d+)""".r // <-- note the little .r at the end
+    line match {
+      case header(fn) => Some(Header(fn.toLong))
+      case _ => None
+    }
   }
 }
 
@@ -15,7 +13,7 @@ case class FileContent(header: Header, lines: Iterator[String])
 object FileContent {
   def apply(content: Iterator[String]): Option[FileContent] = {
     for {
-      header <- Header(content.take(1).toList.head)
+      header <- Header.create(content.take(1).toList.head)
       lines = content
     } yield FileContent(header, lines)
   }
